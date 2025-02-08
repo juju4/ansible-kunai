@@ -32,6 +32,8 @@
       ansible.builtin.pip:
         name: prettytable
         state: present
+        # avoid mixing with github runner various python
+        executable: /usr/bin/pip3
     - name: Debug | var ansible_virtualization_type
       ansible.builtin.debug:
         var: ansible_virtualization_type
@@ -97,6 +99,6 @@
 
     - name: Run EDR-Telemetry generator
       ansible.builtin.command:  # noqa no-changed-when
-        cmd: python3 lnx_telem_gen.py
+        cmd: /usr/bin/python3 lnx_telem_gen.py
       args:
         chdir: /tmp/EDR-Telemetry/Tools/Telemetry-Generator/Linux/
