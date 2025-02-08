@@ -125,3 +125,9 @@ jobs:
           sudo cat /tmp/EDR-Telemetry/Tools/Telemetry-Generator/Linux/function_output_log.csv
         if: ${{ always() }}
         continue-on-error: true
+      - name: After script - kunai logs
+        run: |
+          set -x
+          sudo tail -500 /var/log/kunai/events.log
+        if: ${{ always() }}
+        continue-on-error: true
