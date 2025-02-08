@@ -5,7 +5,7 @@
   vars:
     gh_repo: "{{ kunai_repo }}"
     gh_release: "{{ kunai_release }}"
-    gh_json_query: "assets[?ends_with(browser_download_url, '-' + kunai_arch)].browser_download_url"
+    gh_json_query: "assets[?ends_with(browser_download_url, '-{{ kunai_arch }}')].browser_download_url"
 
 - name: Install kunai
   ansible.builtin.command:
