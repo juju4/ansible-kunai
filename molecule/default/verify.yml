@@ -21,6 +21,7 @@
         name:
           - procps
           # EDR-Telemetry generator
+          - python3-pip
           - python3-dbus
           - python3-libuser
           - python3-packaging
