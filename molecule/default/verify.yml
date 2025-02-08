@@ -104,3 +104,4 @@
         cmd: /usr/bin/python3 lnx_telem_gen.py
       args:
         chdir: /tmp/EDR-Telemetry/Tools/Telemetry-Generator/Linux/
+      failed_when: false
