@@ -1,6 +1,6 @@
 ---
 
-kunai_repo: https://github.com/kunai-project/kunai/
+kunai_repo: kunai-project/kunai
 kunai_release: v0.5.3
 
 kunai_install_args: ''
