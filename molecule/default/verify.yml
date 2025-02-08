@@ -17,7 +17,7 @@
           - procps-ng
           - python3-pip
           - python3-dbus
-          - python3-libuser
+          # - python3-libuser
           - python3-packaging
           - python3-prettytable
           - git
@@ -30,12 +30,18 @@
           # EDR-Telemetry generator
           - python3-pip
           - python3-dbus
-          - python3-libuser
           - python3-packaging
           - python3-prettytable
           - git
         state: present
       when: ansible_os_family == "Debian"
+    - name: Debian | Ensure linux-headers present
+      ansible.builtin.package:
+        name:
+          # Not available on Debian 11
+          - python3-libuser
+        state: present
+      failed_when: false
     - name: Debian | Ensure linux-headers present
       ansible.builtin.package:
         name:
