@@ -13,6 +13,9 @@
     cmd: "{{ install_archives }}/{{ gh_dl_url | basename }} install --systemd {{ kunai_install_args }}"
   args:
     creates: /usr/bin/kunai
+  notify:
+    - Reload systemd
+    - Restart kunai
 
 - name: Dump kunai config if does not exist
   ansible.builtin.shell:
@@ -36,3 +39,11 @@
     - kunai_config_yaml_extras | length > 0
   notify:
     - Restart kunai
+
+- name: Ensure kunai service is enabled and started
+  ansible.builtin.service:
+    name: 00-kunai
+    state: started
+    enabled: yes
+  when:
+    - not is_container|bool

@@ -8,7 +8,7 @@
 
 - name: Restart kunai
   ansible.builtin.service:
-    name: kunai
+    name: 00-kunai
     state: restarted
   when:
     - not is_container|bool
