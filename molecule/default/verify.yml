@@ -89,13 +89,14 @@
         - not is_container|bool
 
     - name: Get EDR-Telemetry generator
-      ansible.builtin.get_url:
-        url: https://github.com/tsale/EDR-Telemetry/raw/refs/heads/main/Tools/Telemetry-Generator/Linux/lnx_telem_gen.py
-        dest: /tmp/lnx_telem_gen.py
+      ansible.builtin.git:
+        repo: https://github.com/tsale/EDR-Telemetry/
+        dest: /tmp/EDR-Telemetry
         mode: '0755'
+        version: 'de07960a5306a0e6abb5b179586a31fd49d22f77'
 
     - name: Run EDR-Telemetry generator
       ansible.builtin.command:  # noqa no-changed-when
         cmd: python3 lnx_telem_gen.py
       args:
-        chdir: /tmp
+        chdir: /tmp/EDR-Telemetry/Tools/Telemetry-Generator/Linux/
