@@ -122,6 +122,6 @@ jobs:
       - name: After script - EDRTelemetry generator
         run: |
           set -x
-          sudo cat /tmp/function_output_log.csv
+          sudo cat /tmp/EDR-Telemetry/Tools/Telemetry-Generator/Linux/function_output_log.csv
         if: ${{ always() }}
         continue-on-error: true
