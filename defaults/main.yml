@@ -8,4 +8,5 @@ kunai_install_args: ''
 
 kunai_config_yaml_extras:
 
+install_archives: /var/_install
 is_container: false
