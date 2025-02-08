@@ -10,7 +10,7 @@
 
 - name: Install kunai
   ansible.builtin.command:
-    cmd: "{{ install_archives }}/{{ gh_dl_url | basename }} --install --systemd {{ kunai_install_args }}"
+    cmd: "{{ install_archives }}/{{ gh_dl_url | basename }} install --systemd {{ kunai_install_args }}"
   args:
     creates: /etc/systemd/system/kunai.service
 
