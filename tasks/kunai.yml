@@ -1,0 +1,37 @@
+---
+
+- name: Import Github repo release download
+  ansible.builtin.import_tasks: github-repo-download.yml
+  vars:
+    gh_repo: "{{ kunai_repo }}"
+    gh_release: "{{ kunai_release }}"
+    gh_json_query: "assets[?ends_with(browser_download_url, '-' + kunai_arch)].browser_download_url"
+
+- name: Install kunai
+  ansible.builtin.command:
+    cmd: "{{ install_archives }}/{{ gh_dl_url | basename }} --install --systemd {{ kunai_install_args }}"
+  args:
+    creates: /etc/systemd/system/kunai.service
+
+- name: Dump kunai config if does not exist
+  ansible.builtin.shell:
+    cmd: "kunai config --dump > /etc/kunai/config.yaml"
+  args:
+    creates: /etc/kunai/config.yaml
+
+- name: Retrieve kunai config
+  ansible.builtin.command:
+    cmd: "cat /etc/kunai/config.yaml"
+  register: kunai_cfg
+  changed_when: false
+
+- name: Merge kunai config
+  ansible.builtin.copy:
+    content: "{{ kunai_cfg | ansible.builtin.combine(kunai_config_yaml_extras, recursive=true) }}"
+    dest: /etc/kunai/config.yaml
+    mode: '0600'
+  when:
+    - kunai_config_yaml_extras != None
+    - kunai_config_yaml_extras | length > 0
+  notify:
+    - Restart kunai

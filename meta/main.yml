@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  role_name: kunai
+  author: juju4
+  description: Ansible role to setup [Kunai, Threat-hunting tool for Linux](https://github.com/kunai-project/kunai)
+  license: BSD
+  min_ansible_version: '2.10'
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - jammy
+        - focal
+        - bionic
+  galaxy_tags:
+    - system
+    - security
+    - threathunting
+    - ebpf
+dependencies: []
