@@ -4,7 +4,7 @@
 
 - name: Get release information from Github API
   ansible.builtin.uri:
-    url: "https://api.github.com/repos/{{ gh_repo }}/releases/{{ gh_release | default('latest') }}"
+    url: "https://api.github.com/repos/{{ gh_repo }}/releases/tags/{{ gh_release | default('latest') }}"
     return_content: true
   register: gh_info
   until: gh_info is success
