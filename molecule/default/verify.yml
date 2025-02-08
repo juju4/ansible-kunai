@@ -26,16 +26,11 @@
           - python3-dbus
           - python3-libuser
           - python3-packaging
+          - python3-prettytable
           - git
           - "linux-headers-{{ ansible_kernel }}"
         state: present
       when: ansible_os_family == "Debian"
-    - name: Ensure prettytable pip is present
-      ansible.builtin.pip:
-        name: prettytable
-        state: present
-        # avoid mixing with github runner various python
-        executable: /usr/bin/pip3
     - name: Debug | var ansible_virtualization_type
       ansible.builtin.debug:
         var: ansible_virtualization_type
