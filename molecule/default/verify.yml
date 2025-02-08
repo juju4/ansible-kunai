@@ -23,6 +23,7 @@
           # EDR-Telemetry generator
           - python3-dbus
           - python3-libuser
+          - python3-packaging
           - git
           - "linux-headers-{{ ansible_kernel }}"
         state: present
@@ -92,7 +93,6 @@
       ansible.builtin.git:
         repo: https://github.com/tsale/EDR-Telemetry/
         dest: /tmp/EDR-Telemetry
-        mode: '0755'
         version: 'de07960a5306a0e6abb5b179586a31fd49d22f77'
 
     - name: Run EDR-Telemetry generator
