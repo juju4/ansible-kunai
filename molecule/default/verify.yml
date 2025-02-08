@@ -9,6 +9,7 @@
     ports: []
     #   - { h: 127.0.0.1, p: 8080 }
     is_container: false
+    edr_telemetry_version: 'de07960a5306a0e6abb5b179586a31fd49d22f77'
   pre_tasks:
     - name: RedHat | Ensure ps and host are present
       ansible.builtin.package:
@@ -96,7 +97,7 @@
       ansible.builtin.git:
         repo: https://github.com/tsale/EDR-Telemetry/
         dest: /tmp/EDR-Telemetry
-        version: 'de07960a5306a0e6abb5b179586a31fd49d22f77'
+        version: "{{ edr_telemetry_version }}"
 
     - name: Run EDR-Telemetry generator
       ansible.builtin.command:  # noqa no-changed-when
