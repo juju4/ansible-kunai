@@ -14,19 +14,17 @@
       ansible.builtin.package:
         name:
           - procps-ng
-          - bind-utils
         state: present
       when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int >= 8
     - name: Debian | Ensure ps and host present
       ansible.builtin.package:
         name:
           - procps
-          - dnsutils
           # EDR-Telemetry generator
           - python3-dbus
           - python3-libuser
           - git
-          - linux-headers-$(uname -r)
+          - "linux-headers-{{ ansible_kernel }}"
         state: present
       when: ansible_os_family == "Debian"
     - name: Ensure prettytable pip is present
