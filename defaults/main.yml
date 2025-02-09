@@ -8,5 +8,10 @@ kunai_install_args: ''
 
 kunai_config_yaml_extras:
 
+kunai_reporting_enable: true
+kunai_reporting_template: kunai_report.sh
+kunai_reporting_dest: /var/tmp
+kunai_logrotate_days: 10
+
 install_archives: /var/_install
 is_container: false

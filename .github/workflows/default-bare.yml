@@ -131,3 +131,9 @@ jobs:
           sudo tail -500 /var/log/kunai/events.log
         if: ${{ always() }}
         continue-on-error: true
+      - name: After script - kunai report
+        run: |
+          set -x
+          sudo /usr/local/scripts/kunai_report.sh
+        if: ${{ always() }}
+        continue-on-error: true

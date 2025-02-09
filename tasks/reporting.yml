@@ -1,0 +1,57 @@
+---
+
+- name: Ensure /usr/local/scripts exists
+  ansible.builtin.file:
+    dest: /usr/local/scripts
+    state: directory
+    mode: '0755'
+
+- name: Ensure reporting script exists
+  ansible.builtin.template:
+    src: "{{ kunai_reporting_template }}.j2"
+    dest: "/usr/local/scripts/{{ kunai_reporting_template | basename }}"
+    mode: '0755'
+
+- name: Creates a daily scheduled task for reporting
+  ansible.builtin.cron:
+    name: kunai_reporting
+    minute: "55"
+    hour: "23"
+    user: "root"
+    job: "/usr/local/scripts/kunai_report.sh"
+    cron_file: ansible_kunai_reporting
+  when: false
+
+- name: Ensure /etc/systemd/system exists
+  ansible.builtin.file:
+    path: /etc/systemd/system
+    mode: '0775'
+    owner: root
+    state: directory
+
+- name: Ensure service kunai-report.service is set
+  ansible.builtin.template:
+    src: "systemd-kunai-report.service.conf.j2"
+    dest: /etc/systemd/system/kunai-report.service
+    mode: '0644'
+  notify:
+    - Reload systemd
+  when: false
+
+- name: Ensure service kunai-report.timer is set
+  ansible.builtin.template:
+    src: "systemd-kunai-report.timer.conf.j2"
+    dest: /etc/systemd/system/kunai-report.timer
+    mode: '0644'
+  notify:
+    - Reload systemd
+  when: false
+
+- name: Ensure kunai-report.timer is enabled
+  ansible.builtin.service:
+    name: "kunai-report.timer"
+    enabled: yes
+    state: started
+  when:
+    - not is_container | bool
+    - false

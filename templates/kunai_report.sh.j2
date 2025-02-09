@@ -1,0 +1,37 @@
+#!/bin/sh
+
+export export PATH=/usr/bin:/bin
+umask 077
+
+date=$(date +%Y%m%d)
+f=/var/log/kunai/events.log
+echo
+echo
+echo "      KUNAI DAILY REPORT ${date} for ${f}"
+echo
+echo
+
+echo "** Events info.host.name"
+jq -r '.info.host.name' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events info.host.container.name"
+jq -r '.info.host.container.name' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events info.event.source"
+jq -r '.info.event.source' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events info.event.name"
+jq -r '.info.event.name' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events info.task.name"
+jq -r '.info.task.name' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events info.parent_task.name"
+jq -r '.info.parent_task.name' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events data.exe.path"
+jq -r '.data.exe.path' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events data.command_line"
+jq -r '.data.command_line' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events data.ancestors"
+jq -r '.data.ancestors' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events data.mapped.error"
+jq -r '.data.mapped.error' "${f}" | sort | uniq -c | sort -nr | head -10
+echo
+echo
+
+find {{ kunai_reporting_dest }} -name 'nginx-report-*' -mtime +{{ kunai_reporting_purge | default('10') }} -exec rm {} \; 2>/dev/null

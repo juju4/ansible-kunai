@@ -39,3 +39,8 @@
 
 - name: Import kunai
   ansible.builtin.import_tasks: kunai.yml
+
+- name: Import reporting
+  ansible.builtin.import_tasks: reporting.yml
+  when:
+    - kunai_reporting_enable | bool
