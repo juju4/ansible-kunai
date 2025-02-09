@@ -100,10 +100,13 @@ jobs:
         continue-on-error: true
       - name: After script - systemd
         run: |
+          set -x
           systemctl -l --no-pager status kunai || true
           systemd-analyze --no-pager security || true
           systemd-analyze --no-pager security kunai || true
-          systemd-analyze --no-pager verify kunai || true
+          systemd-analyze --no-pager verify 00-kunai || true
+          cat /usr/lib/systemd/system/00-kunai.service || true
+          cat /etc/systemd/system/00-kunai.service.d/hardening.conf || true
         if: ${{ always() }}
         continue-on-error: true
       - name: After script - etc
