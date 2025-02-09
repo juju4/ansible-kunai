@@ -8,7 +8,7 @@ kunai_install_args: ''
 
 kunai_config_yaml_extras:
 
-kunai_systemd_restriction_enable: true
+kunai_systemd_restriction_enable: false
 kunai_cgroups_restriction_enable: true
 kunai_cgroups_cpuquota: '60%'
 kunai_cgroups_memorylimit: '4G'
