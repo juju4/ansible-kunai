@@ -8,6 +8,12 @@ kunai_install_args: ''
 
 kunai_config_yaml_extras:
 
+kunai_systemd_restriction_enable: true
+kunai_cgroups_restriction_enable: true
+kunai_cgroups_cpuquota: '60%'
+kunai_cgroups_memorylimit: '4G'
+kunai_cgroups_cpushares: '60'
+
 kunai_reporting_enable: true
 kunai_reporting_template: kunai_report.sh
 kunai_reporting_dest: /var/tmp

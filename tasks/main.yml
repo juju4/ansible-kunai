@@ -40,6 +40,11 @@
 - name: Import kunai
   ansible.builtin.import_tasks: kunai.yml
 
+- name: Import systemd
+  ansible.builtin.import_tasks: systemd.yml
+  when:
+    - kunai_systemd_restriction_enable | bool
+
 - name: Import reporting
   ansible.builtin.import_tasks: reporting.yml
   when:
