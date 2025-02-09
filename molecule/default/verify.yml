@@ -73,6 +73,17 @@
         that:
           - bin1.stat.exists and bin1.stat.size != 0 and bin1.stat.mode == '0755'
 
+    - name: Check binary is functional
+      ansible.builtin.command:
+        cmd: "kunai --help"
+      register: run
+      changed_when: false
+      failed_when: false
+    - name: Validate run output
+      ansible.builtin.assert:
+        that:
+          - "'Kunai is a multi-purpose security monitoring tool for Linux systems' in run.stdout"
+
     - name: Ensure processes are running
       ansible.builtin.command:
         cmd: "pgrep -u {{ item.u }} {{ item.p }}"
