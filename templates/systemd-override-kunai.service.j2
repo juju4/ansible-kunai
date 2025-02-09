@@ -73,8 +73,8 @@ CapabilityBoundingSet=~CAP_SYS_ADMIN
 # Error: map error: failed to create map `BPF_PROG_TRACK` with code -1
 # Error: map error: failed to create map `KUNAI_EVENTS` with code -1
 #  called `Result::unwrap()` on an `Err` value: OpenError { io_error: Os { code: 1, kind: PermissionDenied, message: "Operation not permitted" } }
-SystemCallFilter=@system-service @privileged @debug
-SystemCallFilter=~@clock @cpu-emulation @module @mount @obsolete @raw-io @reboot @resources @swap
+# SystemCallFilter=@system-service @privileged @debug
+# SystemCallFilter=~@clock @cpu-emulation @module @mount @obsolete @raw-io @reboot @resources @swap
 SystemCallArchitectures=native
 # When system call is disallowed, return error code instead of killing process
 SystemCallErrorNumber=EPERM
