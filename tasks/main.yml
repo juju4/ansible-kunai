@@ -30,7 +30,9 @@
   ansible.builtin.file:
     dest: "{{ install_archives }}"
     state: directory
-    mode: '0775'
+    mode: '0755'
+    owner: root
+    group: root
   become: yes
   become_user: root
   when:
