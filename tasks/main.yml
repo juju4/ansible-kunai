@@ -39,6 +39,11 @@
     - install_archives != '/tmp'
     - install_archives != '/var/tmp'
 
+- name: Ensure systemd is present
+  ansible.builtin.package:
+    name: systemd
+    state: present
+
 - name: Import kunai
   ansible.builtin.import_tasks: kunai.yml
 
