@@ -109,6 +109,28 @@ jobs:
           cat /etc/systemd/system/00-kunai.service.d/hardening.conf || true
         if: ${{ always() }}
         continue-on-error: true
+      - name: After script - bpf kernel
+        run: |
+          set -x
+          cat /sys/kernel/security/lsm
+          grep BPF /boot/config-*
+        if: ${{ always() }}
+        continue-on-error: true
+      - name: After script - kernel full config
+        run: |
+          set -x
+          ls -l /boot/config-*
+          sudo cat /boot/config-*
+        if: ${{ always() }}
+        continue-on-error: true
+      - name: After script - bps
+        run: |
+          set -x
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y bpfcc-introspection bpftool
+          sudo bps
+          sudo bpftool prog show
+        if: ${{ always() }}
+        continue-on-error: true
       - name: After script - etc
         run: |
           set -x
