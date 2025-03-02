@@ -19,5 +19,8 @@ kunai_reporting_template: kunai_report.sh
 kunai_reporting_dest: /var/tmp
 kunai_logrotate_days: 10
 
+kunai_systemd_path_enable: true
+kunai_systemd_path_group: systemd-journald
+
 install_archives: /var/_install
 is_container: false

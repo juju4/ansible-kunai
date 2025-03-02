@@ -47,6 +47,11 @@
   when:
     - kunai_systemd_restriction_enable | bool
 
+- name: Import systemd-rotate
+  ansible.builtin.import_tasks: systemd-rotate.yml
+  when:
+    - kunai_systemd_path_enable | bool
+
 - name: Import reporting
   ansible.builtin.import_tasks: reporting.yml
   when:

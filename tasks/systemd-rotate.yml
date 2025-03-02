@@ -1,0 +1,16 @@
+---
+## FIXME! this will trigger on all file change meaning all the time...
+## only want after rotate aka unlink/link but no such option
+
+- name: Add systemd.path rotate service and path files
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "/etc/systemd/system/{{ item }}"
+    mode: '0644'
+    backup: "{{ kunai_backup | default(true) }}"
+  loop:
+    - kunailog.service
+    - kunailog.path
+  notify:
+    - Reload systemd
+    - Restart kunailog
