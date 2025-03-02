@@ -26,3 +26,5 @@
   loop:
     - kunailog.service
     - kunailog.path
+  when:
+    - not is_container | bool
