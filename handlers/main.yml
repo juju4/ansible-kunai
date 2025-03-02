@@ -12,3 +12,10 @@
     state: restarted
   when:
     - not is_container|bool
+
+- name: Restart kunailog
+  ansible.builtin.service:
+    name: kunailog.path
+    state: restarted
+  when:
+    - not is_container|bool

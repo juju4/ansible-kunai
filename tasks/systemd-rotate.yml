@@ -14,3 +14,12 @@
   notify:
     - Reload systemd
     - Restart kunailog
+
+- name: Ensure kunailog.{path,service} are enabled and started
+  ansible.builtin.service:
+    name: "{{ item }}.j2"
+    enabled: true
+    state: started
+  loop:
+    - kunailog.service
+    - kunailog.path
