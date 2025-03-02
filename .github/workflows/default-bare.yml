@@ -130,9 +130,9 @@ jobs:
       - name: After script - bps
         run: |
           set -x
-          sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y bpfcc-introspection bpftool
-          sudo bps
-          sudo bpftool prog show
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y bpfcc-introspection bpftool linux-tools-common || true
+          sudo bps || true
+          sudo bpftool prog show || true
         if: ${{ always() }}
         continue-on-error: true
       - name: After script - etc
