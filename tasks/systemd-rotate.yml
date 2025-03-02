@@ -15,6 +15,9 @@
     - Reload systemd
     - Restart kunailog
 
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
 - name: Ensure kunailog.{path,service} are enabled and started
   ansible.builtin.service:
     name: "{{ item }}.j2"
