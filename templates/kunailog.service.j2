@@ -8,7 +8,7 @@ Documentation=https://www.freedesktop.org/software/systemd/man/latest/systemd.pa
 Type=oneshot
 User=root
 ConditionPathExists=/var/log/kunai/events.log
-ExecStart=/usr/bin/setfacl -m "g:{{ kunai_systemd_path_group }}:r" -- /var/log/kunai/events.log
+ExecStart=/usr/bin/setfacl -m "g:{{ kunai_systemd_path_group }}:r" /var/log/kunai/events.log
 
 [Install]
 WantedBy=multi-user.target
