@@ -118,6 +118,8 @@ jobs:
           set -x
           cat /sys/kernel/security/lsm
           grep BPF /boot/config-*
+          cat /proc/cmdline
+          sudo grep lsm /boot/grub/grub.cfg
         if: ${{ always() }}
         continue-on-error: true
       - name: After script - kernel full config
@@ -125,6 +127,7 @@ jobs:
           set -x
           ls -l /boot/config-*
           sudo cat /boot/config-*
+          cat /sys/kernel/security/lockdown
         if: ${{ always() }}
         continue-on-error: true
       - name: After script - bps
