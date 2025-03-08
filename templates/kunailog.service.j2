@@ -8,6 +8,7 @@ Documentation=https://www.freedesktop.org/software/systemd/man/latest/systemd.pa
 Type=oneshot
 User=root
 ConditionPathExists=/var/log/kunai/events.log
+# FIXME! setfacl[46433]: setfacl: /var/log/kunai/events.log: No such file or directory
 ExecStart=/usr/bin/setfacl -m "g:{{ kunai_systemd_path_group }}:r" /var/log/kunai/events.log
 
 [Install]
