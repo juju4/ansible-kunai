@@ -29,4 +29,5 @@ kunai_systemd_path_enable: true
 kunai_systemd_path_group: systemd-journal
 
 install_archives: /var/_install
+scriptsdir: /usr/local/scripts
 is_container: false
