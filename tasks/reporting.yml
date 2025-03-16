@@ -36,7 +36,6 @@
     mode: '0644'
   notify:
     - Reload systemd
-  when: false
 
 - name: Ensure service kunai-report.timer is set
   ansible.builtin.template:
@@ -45,7 +44,6 @@
     mode: '0644'
   notify:
     - Reload systemd
-  when: false
 
 - name: Ensure kunai-report.timer is enabled
   ansible.builtin.service:
@@ -54,4 +52,3 @@
     state: started
   when:
     - not is_container | bool
-    - false

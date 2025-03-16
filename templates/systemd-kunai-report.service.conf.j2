@@ -1,0 +1,14 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description=kunai report
+StartLimitIntervalSec=0
+
+[Service]
+Type=oneshot
+User=root
+ExecStart={{ scriptsdir }}/kunai_report.sh
+WorkingDirectory=/var/tmp
+
+[Install]
+WantedBy=multi-user.target
