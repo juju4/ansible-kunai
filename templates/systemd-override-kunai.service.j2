@@ -57,9 +57,9 @@ CapabilityBoundingSet=~CAP_SETPCAP
 CapabilityBoundingSet=~CAP_SYS_RAWIO
 # "Error: procfs: Internal error: bug at /home/quentin/.cargo/registry/src/index.crates.io-6f17d22bba15001f/procfs-0.16.0/src/process/namespaces.rs:33 (please report this procfs bug)"
 # "Internal Unwrap Error: Unable to stat "/proc/1/ns/net"
-# CapabilityBoundingSet=~CAP_SYS_PTRACE
+# CapabilityBoundingSet=~CAP_SYS_PTRACE
 CapabilityBoundingSet=~CAP_SYS_NICE
-# CapabilityBoundingSet=~CAP_SYS_RESOURCE
+# CapabilityBoundingSet=~CAP_SYS_RESOURCE
 CapabilityBoundingSet=~CAP_SYS_BOOT
 CapabilityBoundingSet=~CAP_SYS_CHROOT
 CapabilityBoundingSet=~CAP_SYS_PACCT
@@ -70,7 +70,7 @@ CapabilityBoundingSet=~CAP_SYS_ADMIN
           ansible_virtualization_type == "docker"
         )
 %}
-# Error: map error: failed to create map `BPF_PROG_TRACK` with code -1
+# Error: map error: failed to create map `BPF_PROG_TRACK` with code -1
 # Error: map error: failed to create map `KUNAI_EVENTS` with code -1
 #  called `Result::unwrap()` on an `Err` value: OpenError { io_error: Os { code: 1, kind: PermissionDenied, message: "Operation not permitted" } }
 SystemCallFilter=@system-service @privileged @debug
