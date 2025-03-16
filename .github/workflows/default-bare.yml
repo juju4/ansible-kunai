@@ -158,7 +158,15 @@ jobs:
       - name: After script - EDRTelemetry generator
         run: |
           set -x
+          sudo ls -l /tmp/EDR-Telemetry/Tools/Telemetry-Generator/Linux/
           sudo cat /tmp/EDR-Telemetry/Tools/Telemetry-Generator/Linux/function_output_log.csv
+        if: ${{ always() }}
+        continue-on-error: true
+      - name: After script - EDRTelemetry kunai logs
+        run: |
+          set -x
+          sudo grep /tmp/EDR-Telemetry /var/log/kunai/events.log | tee /tmp/edrtelemetry.log | tail -500
+          /usr/local/scripts/kunai_report.sh /tmp/edrtelemetry.log
         if: ${{ always() }}
         continue-on-error: true
       - name: After script - kunai logs
