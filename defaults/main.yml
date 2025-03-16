@@ -6,7 +6,13 @@ kunai_release: v0.5.3
 kunai_install_args: ''
 # kunai_install_args: '--harden'
 
+# put custom rules, ioc here
 kunai_config_yaml_extras:
+
+kunai_rules_templates: []
+#  - rules.kunai
+kunai_ioc_templates: []
+kunai_yara_templates: []
 
 kunai_systemd_restriction_enable: false
 kunai_cgroups_restriction_enable: true
