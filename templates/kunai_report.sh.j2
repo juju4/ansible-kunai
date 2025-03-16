@@ -5,6 +5,9 @@ umask 077
 
 date=$(date +%Y%m%d)
 f=/var/log/kunai/events.log
+if [ "X$#" = X1 -a -f "$1" ]; then
+  f="$1"
+fi
 echo
 echo
 echo "      KUNAI DAILY REPORT ${date} for ${f}"
