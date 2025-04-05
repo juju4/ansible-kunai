@@ -4,6 +4,9 @@
 # /etc/systemd/system/00-kunai.service.d/hardening.conf
 #
 [Service]
+{% if kunai_env_debug | bool %}
+Environment=RUST_BACKTRACE=full
+{% endif %}
 # Hardening
 # Exposure score 9.5 -> 2.6
 # Warning! Test to your context

@@ -9,6 +9,8 @@ kunai_install_args: ''
 # put custom rules, ioc here
 kunai_config_yaml_extras:
 
+kunai_env_debug: false
+
 kunai_rules_templates: []
 #  - rules.kunai
 kunai_ioc_templates: []
