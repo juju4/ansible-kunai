@@ -7,6 +7,8 @@
 - name: Get rsyslog version
   ansible.builtin.set_fact:
     rsyslog_v: "{{ ansible_facts.packages['rsyslog'][0]['version'] }}"
+  when:
+    - "'rsyslog' in ansible_facts.packages"
 
 - name: Rsyslog present
   when:
