@@ -52,6 +52,10 @@ $ MOLECULE_DISTRO=ubuntu:24.04 molecule test --destroy=never
   * If container, may need `lxc config set MyContainer limits.kernel.memlock unlimited` ([lxc](https://discuss.linuxcontainers.org/t/error-setting-rlimits-type-8-operation-not-permitted-unknown-in-lxd-container/9976/3)), "lxc.prlimit.memlock: (KB)" ([proxmox /etc/pve/lxc/<ID>.conf)](https://forum.proxmox.com/threads/how-to-increase-max-locked-memory-ulimit-l-on-a-lxc-container.69079/)) or run as privileged. = not enough for proxmox
   * If not, review [memlock settings in /etc/security/limits.conf](https://github.com/RPCS3/rpcs3/issues/9328).
 
+* systemd unit fail with "ExecStart=/usr/bin/kunai run -c /etc/kunai/config.yaml (code=exited, status=101)"
+  * Try disabling systemd hardening
+  * Review logs, eventually set RUST_BACKTRACE=1 in environment (kunai_env_debug)
+
 ## License
 
 BSD 2-clause

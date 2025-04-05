@@ -12,6 +12,7 @@
 
 - name: Rsyslog present
   when:
+    - rsyslog_v is defined
     - rsyslog_v | string
   block:
     - name: Filter out kunai logs from rsyslog to avoid overload
