@@ -61,3 +61,6 @@
   ansible.builtin.import_tasks: reporting.yml
   when:
     - kunai_reporting_enable | bool
+
+- name: Import rsyslog
+  ansible.builtin.import_tasks: rsyslog.yml
