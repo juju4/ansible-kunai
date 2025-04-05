@@ -1,0 +1,22 @@
+---
+
+- name: Gather package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Get rsyslog version
+  ansible.builtin.set_fact:
+    rsyslog_v: "{{ ansible_facts.packages['rsyslog'][0]['version'] }}"
+
+- name: Rsyslog present
+  when:
+    - rsyslog_v | string
+  block:
+    - name: Filter out kunai logs from rsyslog to avoid overload
+      ansible.builtin.template:
+        src: 30-kunai.rsyslog.conf.j2
+        dest: /etc/rsyslog.d/30-kunai.conf
+        mode: '0644'
+        backup: yes
+      notify:
+        - Restart rsyslog
