@@ -17,6 +17,11 @@
     - Reload systemd
     - Restart kunai
 
+- name: Ensure yamllint package is present for base validation
+  ansible.builtin.package:
+    name: yamllint
+    state: present
+
 - name: Configure kunai templates
   ansible.builtin.template:
     src: "{{ item }}.j2"
@@ -24,6 +29,7 @@
     mode: '0600'
     owner: root
     group: root
+    validate: 'yamllint %s'
   loop: "{{ kunai_rules_templates + kunai_ioc_templates + kunai_yara_templates }}"
   notify:
     - Restart kunai
@@ -42,9 +48,10 @@
 
 - name: Merge kunai config
   ansible.builtin.copy:
-    content: "{{ kunai_cfg.stdout | from_yaml | ansible.builtin.combine(kunai_config_yaml_extras, recursive=true) | to_nice_yaml(indent=4) }}"
+    content: "{{ kunai_cfg.stdout | from_yaml | ansible.builtin.combine(kunai_config_yaml_extras, recursive=true) | to_nice_yaml(indent=2) }}"
     dest: /etc/kunai/config.yaml
     mode: '0600'
+    validate: 'yamllint %s'
   when:
     - kunai_config_yaml_extras != None
     - kunai_config_yaml_extras | length > 0
