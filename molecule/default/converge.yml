@@ -34,4 +34,5 @@
         cache_valid_time: 3600
       when: ansible_os_family == "Debian"
   roles:
+    - { role: juju4.redhat_epel, when: ansible_os_family == "RedHat" }
     - juju4.kunai
