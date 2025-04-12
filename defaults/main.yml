@@ -7,9 +7,33 @@ kunai_force_update: false
 kunai_install_args: ''
 # kunai_install_args: '--harden'
 
-# put custom rules, ioc here
-kunai_config_yaml_extras:
-
+kunai_config_template: config.yaml
+kunai_output_stdout_enable: false
+kunai_events_execve: true
+kunai_events_execve_script: true
+kunai_events_exit: true
+kunai_events_exit_group: true
+kunai_events_clone: true
+kunai_events_prctl: true
+kunai_events_kill: true
+kunai_events_ptrace: true
+kunai_events_init_module: true
+kunai_events_bpf_prog_load: true
+kunai_events_bpf_socket_filter: true
+kunai_events_mprotect_exec: true
+kunai_events_mmap_exec: true
+kunai_events_connect: true
+kunai_events_dns_query: true
+kunai_events_send_data: true
+kunai_events_read_config: true
+kunai_events_write_config: true
+kunai_events_file_rename: true
+kunai_events_file_unlink: true
+kunai_events_file_create: true
+kunai_events_file_scan: true
+kunai_events_read: false
+kunai_events_write: false
+kunai_events_write_close: false
 kunai_env_debug: false
 
 kunai_rules_templates: []

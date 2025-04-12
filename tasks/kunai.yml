@@ -58,27 +58,20 @@
   notify:
     - Restart kunai
 
-- name: Dump kunai config if does not exist
-  ansible.builtin.shell:
-    cmd: "kunai config --dump > /etc/kunai/config.yaml"
-  args:
-    creates: /etc/kunai/config.yaml
-
-- name: Retrieve kunai config
-  ansible.builtin.command:
-    cmd: "cat /etc/kunai/config.yaml"
-  register: kunai_cfg
-  changed_when: false
-
-- name: Merge kunai config
-  ansible.builtin.copy:
-    content: "{{ kunai_cfg.stdout | from_yaml | ansible.builtin.combine(kunai_config_yaml_extras, recursive=true) | to_nice_yaml(indent=2) }}"
+- name: Include random-uuid
+  ansible.builtin.include_tasks: random-uuid.yml
+  vars:
+    secretdir: /etc/kunai
+    secretprefix: .secrets
+    secretlength: 32
+    secretbase64: true
+    name_random: random_uuid
+- name: Set kunai config
+  ansible.builtin.template:
+    src: "{{ kunai_config_template }}.j2"
     dest: /etc/kunai/config.yaml
     mode: '0600'
-    validate: 'yamllint %s'
-  when:
-    - kunai_config_yaml_extras != None
-    - kunai_config_yaml_extras | length > 0
+    # validate: 'yamllint %s'
   notify:
     - Restart kunai
 

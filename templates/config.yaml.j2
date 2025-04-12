@@ -1,0 +1,94 @@
+---
+{{ ansible_managed | comment }}
+
+# /etc/kunai/config.yaml
+host_uuid: {{ random_uuid }}
+max_buffered_events: 1024
+max_eps_fs: 2048
+workers: null
+send_data_min_len: null
+harden: false
+output:
+{% if kunai_output_stdout_enable | bool %}
+  path: /dev/stdout
+  rotate_size: null
+  max_size: null
+  buffered: false
+{% else %}
+  path: /var/log/kunai/events.log
+  rotate_size: 10MB
+  max_size: 1GB
+  buffered: false
+{% endif %}
+scanner:
+{% if kunai_rules_templates %}
+  rules:
+    {{ kunai_rules_templates | to_nice_yaml(indent=4) }}
+{% else %}
+  rules: []
+{% endif %}
+{% if kunai_ioc_templates %}
+  iocs:
+    {{ kunai_ioc_templates | to_nice_yaml(indent=4) }}
+{% else %}
+  iocs: []
+{% endif %}
+{% if kunai_yara_templates %}
+  yara:
+    {{ kunai_yara_templates | to_nice_yaml(indent=4) }}
+{% else %}
+  yara: []
+{% endif %}
+  min_severity: 0
+  show_positive_file_scan: true
+events:
+  execve:
+    enable: {{ kunai_events_execve | bool | lower }}
+  execve_script:
+    enable: {{ kunai_events_execve_script | bool | lower }}
+  exit:
+    enable: {{ kunai_events_exit | bool | lower }}
+  exit_group:
+    enable: {{ kunai_events_exit_group | bool | lower }}
+  clone:
+    enable: {{ kunai_events_clone | bool | lower }}
+  prctl:
+    enable: {{ kunai_events_prctl | bool | lower }}
+  kill:
+    enable: {{ kunai_events_kill | bool | lower }}
+  ptrace:
+    enable: {{ kunai_events_ptrace | bool | lower }}
+  init_module:
+    enable: {{ kunai_events_init_module | bool | lower }}
+  bpf_prog_load:
+    enable: {{ kunai_events_bpf_prog_load | bool | lower }}
+  bpf_socket_filter:
+    enable: {{ kunai_events_bpf_socket_filter | bool | lower }}
+  mprotect_exec:
+    enable: {{ kunai_events_mprotect_exec | bool | lower }}
+  mmap_exec:
+    enable: {{ kunai_events_mmap_exec | bool | lower }}
+  connect:
+    enable: {{ kunai_events_connect | bool | lower }}
+  dns_query:
+    enable: {{ kunai_events_dns_query | bool | lower }}
+  send_data:
+    enable: {{ kunai_events_send_data | bool | lower }}
+  read:
+    enable: {{ kunai_events_read | bool | lower }}
+  read_config:
+    enable: {{ kunai_events_read_config | bool | lower }}
+  write:
+    enable: {{ kunai_events_write | bool | lower }}
+  write_config:
+    enable: {{ kunai_events_write_config | bool | lower }}
+  file_rename:
+    enable: {{ kunai_events_file_rename | bool | lower }}
+  file_unlink:
+    enable: {{ kunai_events_file_unlink | bool | lower }}
+  write_close:
+    enable: {{ kunai_events_write_close | bool | lower }}
+  file_create:
+    enable: {{ kunai_events_file_create | bool | lower }}
+  file_scan:
+    enable: {{ kunai_events_file_scan | bool | lower }}
