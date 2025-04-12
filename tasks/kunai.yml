@@ -8,14 +8,38 @@
     gh_json_query: "assets[?ends_with(browser_download_url, '-{{ kunai_arch }}')].browser_download_url"
     gh_mode: '0755'
 
-- name: Install kunai
-  ansible.builtin.command:
-    cmd: "{{ install_archives }}/{{ gh_dl_url | basename }} install --systemd {{ kunai_install_args }}"
-  args:
-    creates: /usr/bin/kunai
-  notify:
-    - Reload systemd
-    - Restart kunai
+- name: Install
+  block:
+    - name: Install kunai
+      ansible.builtin.command:
+        cmd: "{{ install_archives }}/{{ gh_dl_url | basename }} install --systemd {{ kunai_install_args }}"
+      args:
+        creates: "{% if not kunai_force_update | bool %}/usr/bin/kunai{% else %}{{ omit }}{% endif %}"
+      notify:
+        - Reload systemd
+        - Restart kunai
+  rescue:
+    # else 'Error: Text file busy (os error 26)'
+    - name: Stop kunai before updating
+      ansible.builtin.service:
+        name: 00-kunai
+        state: stopped
+      when:
+        - not is_container|bool
+    - name: Install kunai
+      ansible.builtin.command:
+        cmd: "{{ install_archives }}/{{ gh_dl_url | basename }} install --systemd {{ kunai_install_args }}"
+      args:
+        creates: "{% if not kunai_force_update | bool %}/usr/bin/kunai{% else %}{{ omit }}{% endif %}"
+      notify:
+        - Reload systemd
+        - Restart kunai
+    - name: Start kunai after updating
+      ansible.builtin.service:
+        name: 00-kunai
+        state: started
+      when:
+        - not is_container|bool
 
 - name: Ensure yamllint package is present for base validation
   ansible.builtin.package:
