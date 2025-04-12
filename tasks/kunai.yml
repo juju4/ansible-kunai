@@ -46,6 +46,11 @@
     name: yamllint
     state: present
 
+- name: Ensure yamllint package is present for base validation
+  ansible.builtin.package:
+    name: yamllint
+    state: present
+
 - name: Configure kunai templates
   ansible.builtin.template:
     src: "{{ item }}.j2"
