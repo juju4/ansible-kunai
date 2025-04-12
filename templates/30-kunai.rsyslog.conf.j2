@@ -4,4 +4,4 @@
 # If output to stdout for journald remote, don't save again in rsyslog
 # else risk to consume resources/fill disk quickly
 if ($programname == 'kunai') then
-& stop
+stop
