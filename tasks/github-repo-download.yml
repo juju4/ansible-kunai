@@ -25,3 +25,21 @@
     url: "https://github.com/kunai-project/kunai/releases/download/{{ gh_release }}/sha512.txt"
     dest: "{{ install_archives }}/kunai-{{ gh_release }}-sha512.txt"
     mode: '0600'
+
+- name: Get archive checksum
+  ansible.builtin.stat:
+    path: "{{ install_archives }}/{{ gh_dl_url | basename }}"
+    get_checksum: true
+    checksum_algorithm: sha512
+  register: kunai_f
+
+- name: Get expected archive checksum
+  ansible.builtin.command:
+    cmd: "grep {{ kunai_arch }} {{ install_archives }}/kunai-{{ gh_release }}-sha512.txt"
+  changed_when: false
+  register: kunai_expected
+
+- name: Validate checksum
+  ansible.builtin.assert:
+    that:
+      - kunai_f.stat.checksum == kunai_expected.stdout | split | first
