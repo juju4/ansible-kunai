@@ -64,3 +64,5 @@
 
 - name: Import rsyslog
   ansible.builtin.import_tasks: rsyslog.yml
+  when:
+    - kunai_output_stdout_enable | bool
