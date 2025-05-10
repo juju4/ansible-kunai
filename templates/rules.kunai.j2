@@ -1,0 +1,294 @@
+---
+# yamllint disable rule:line-length
+# https://why.kunai.rocks/docs/advanced/rule_configuration
+name: include.all.but.noisy
+type: filter
+match-on:
+  events:
+    # we can put - in front of the events we don't want this rule
+    # to apply on. The following means, everything except
+    # mprotect_exec and prctl
+    kunai: ['-mprotect_exec', '-prctl']
+# rule with no condition always returns true
+---
+# Rules have OR relationship between them so here after we keep
+# ONLY some specific mprotect_exec we want to see, all others
+# being excluded by the rule above
+name: log.mprotect_exec
+type: filter
+match-on:
+  events:
+    # applies on kunai mprotect_exec
+    kunai: [mprotect_exec]
+matches:
+  # exe matches regex
+  $browser: .data.exe.path ~= '/usr/lib/(firefox/firefox|chromium/chromium)'
+# if exe is neither firefox nor chromium
+condition: not $browser
+---
+name: log.file_create
+type: filter
+match-on:
+  events:
+    kunai: [file_create]
+matches:
+  # $nginx: .data.command_line == '"nginx: master process /usr/sbin/nginx -g daemon o"'
+  $nginx: .data.command_line ~= 'master process /usr/sbin/nginx -g daemon o'
+  $nginx2: .data.command_line ~= 'worker process'
+  $nginx_path: .data.path ~= '/var/lib/nginx/body/[[:digit:]]+'
+  $openobserve_ancestors: .data.ancestors == '/usr/lib/systemd/systemd|/usr/bin/lxc-start|/usr/lib/systemd/systemd'
+  $openobserve_cli: .data.command_line == '/var/_openobserve/openobserve/openobserve'
+  $openobserve_path: .data.path ~= '/var/_openobserve/openobserve/data/openobserve/.*'
+condition: not ((($nginx or $nginx2) and $nginx_path) or ($openobserve_ancestors and $openobserve_cli and $openobserve_path))
+---
+name: log.kill
+type: filter
+match-on:
+  events:
+    kunai: [kill]
+matches:
+  $otelcol: .data.ancestors == "/usr/lib/systemd/systemd"
+  $otelcol_cli: .data.command_line == "/usr/local/bin/otelcol-contrib --config /etc/otel-config.yaml"
+  # Warning! this uid depends on system...
+  # $otelcol_uid: .info.task.uid == '987'
+# condition: not ($otelcol and $otelcol_cli and $otelcol_uid)
+condition: not ($otelcol and $otelcol_cli)
+---
+name: dep.run.loopback
+type: dependency
+matches:
+  # whole loopback is ~= "^127\." but that would
+  # exclude outlier usage
+  $a: .data.src.ip == "127.0.0.1"
+  $b: .data.src.ip == "::1"
+  $c: .data.dst.ip == "127.0.0.1"
+  $d: .data.dst.ip == "::1"
+condition: ($a or $b) and ($c or $d)
+---
+name: dep.run.dst_dnsservers
+type: dependency
+matches:
+  $a: .data.dst.ip == "10.1.2.2"
+  $b: .data.dst.ip == "10.2.3.2"
+  $c: .data.dst.ip == "192.168.1.2"
+condition: ($a or $b or $c)
+---
+name: dep.run.dst_privateip
+type: dependency
+matches:
+  $a: .data.dst.ip ~= "^10\."
+  $b: .data.dst.ip ~= "^192\.168\."
+condition: ($a or $b)
+---
+name: dep.run.dst_blackboxexp
+type: dependency
+matches:
+  $a: .data.dst.ip == "140.82.121.4"
+condition: ($a or $b)
+---
+name: dep.run.dst_port_doh
+type: dependency
+matches:
+  $a: .data.dst.port == "53"
+  $b: .data.dst.port == "443"
+  $c: .data.dst.port == "5353"
+  $d: .data.dst.port == "5443"
+  $e: .data.dst.port == "8443"
+condition: ($a or $b or $c or $d or $e)
+---
+name: log.connect
+type: filter
+match-on:
+  events:
+    kunai: [connect]
+matches:
+  $l: rule(dep.run.loopback)
+  $dns: rule(dep.run.dst_dnsservers)
+  $doh_ports: rule(dep.run.dst_port_doh)
+  $priv: rule(dep.run.dst_privateip)
+  $be: rule(dep.run.dst_blackboxexp)
+  $nginx: .data.ancestors ~= "/usr/lib/systemd/systemd|/usr/sbin/nginx"
+  # $nginx_cli: .data.command_line == "nginx: worker process"
+  $nginx_cli: .data.command_line ~= "worker process"
+  $nginx_name: .info.task.name == 'nginx'
+  $dnscrypt_ancestors: .data.ancestors == "/usr/lib/systemd/systemd"
+  $dnscrypt_exepath: .data.exe_path == "/opt/dnscrypt-proxy2/linux-x86_64/dnscrypt-proxy"
+  $dnscrypt_parent: .info.parent.task.name == 'systemd'
+  $dnscrypt_name: .info.task.name == 'dnscrypt-proxy'
+  $dnscrypt_uid: .info.task.uid == '0'
+  $prometheus_ancestors: .data.ancestors == "/usr/lib/systemd/systemd"
+  $prometheus_exepath: .data.exe_path == "/usr/local/bin/prometheus"
+  $prometheus_parent: .info.parent.task.name == 'systemd'
+  $prometheus_name: .info.task.name == 'prometheus'
+  # may be variable
+  $prometheus_uid: .info.task.uid == '998'
+  $blackboxexp_name: .info.task.name == 'blackbox_export'
+  $blackboxexp_cli: .data.command_line == '/usr/local/bin/blackbox_exporter --config.file=/etc/blackbox_exporter/blackbox_exporter.yml --web.listen-address=localhost:9115'
+  $blackboxexp_ancestors: .data.ancestors == "/usr/lib/systemd/systemd"
+  $blackboxexp_parent: .info.parent.task.name == 'systemd'
+  $blackboxexp_exepath: .data.exe_path == "/usr/local/bin/blackbox_exporter"
+  $blackboxexp_uid: .info.task.uid == '990'
+  $squid_ancestors: .data.ancestors == "/usr/lib/systemd/systemd|/usr/sbin/squid"
+  $squid_exepath: .data.exe_path == "/usr/sbin/squid"
+  $squid_cli: .data.command_line == '(squid-1) --kid squid-1 --foreground -sYC'
+  $squid_parent: .info.parent.task.name == 'systemd'
+  $squid_name: .info.task.name == 'squid'
+  $squid_uid: .info.task.uid == '13'
+  $squid_dst_port: .data.dst.port == '443'
+condition: >-
+  not (
+    ($nginx and $nginx_cli and $nginx_name and ($priv or $l)) or
+    ($dnscrypt_ancestors and $dnscrypt_exepath and $dnscrypt_parent and $dnscrypt_name and $dnscrypt_uid and $dns)) or
+    ($dnscrypt_ancestors and $dnscrypt_exepath and $dnscrypt_parent and $dnscrypt_name and $dnscrypt_uid and $doh_ports)) or
+    ($prometheus_ancestors and $prometheus_exepath and $prometheus_parent and $prometheus_name and $prometheus_uid and $l) or
+    ($blackboxexp_ancestors and $blackboxexp_exepath and $blackboxexp_parent and $blackboxexp_name and $blackboxexp_uid and $blackboxexp_cli and $be)
+  )
+
+---
+name: log.ptrace
+type: filter
+match-on:
+  events:
+    kunai: [ptrace]
+matches:
+  $lxcfs: .data.ancestors == "/usr/lib/systemd/systemd"
+  $lxcfs_cli: .data.command_line == "/usr/bin/lxcfs /var/lib/lxcfs"
+  $lxcfs_exepath: .data.exe_path == "/usr/bin/lxcfs"
+  $lxcfs_parent: .info.parent.task.name == 'systemd'
+  $lxcfs_name: .info.task.name == 'lxcfs'
+  $lxcfs_uid: .info.task.uid == '0'
+condition: not ($lxcfs and $lxcfs_exepath and $lxcfs_parent and $lxcfs_name and $lxcfs_uid)
+---
+name: log.exit_group
+type: filter
+match-on:
+  events:
+    kunai: [exit_group]
+matches:
+  $pvestatd: .data.ancestors == "/usr/lib/systemd/systemd|/usr/bin/perl"
+  $pvestatd_cli: .data.command_line ~= "pvestatd*"
+  $pvestatd_uid: .info.task.uid == '0'
+  $lxcfs: .data.ancestors == "/usr/lib/systemd/systemd|/usr/bin/lxcfs"
+  $lxcfs_cli: .data.command_line == "/usr/bin/lxcfs /var/lib/lxcfs"
+  $lxcfs_uid: .info.task.uid == '0'
+condition: not (($pvestatd and $pvestatd_cli and $pvestatd_uid) or ($lxcfs and $lxcfs_cli and $lxcfs_uid))
+---
+name: log.execve
+type: filter
+match-on:
+  events:
+    kunai: [execve]
+matches:
+  # FIXME!
+  $lxcinfo_ancestors1: .data.ancestors == "/usr/lib/systemd/systemd|/usr/bin/pvestatd"
+  $lxcinfo_ancestors2: .data.ancestors == "/usr/lib/systemd/systemd|/usr/bin/pvedaemon|/usr/bin/perl"
+  $lxcinfo_cli: .data.command_line ~= "lxc-info -n "
+  $lxcinfo_exepath: .data.exe_path == "/usr/bin/lxc-info"
+  $lxcinfo_uid: .info.task.uid == '0'
+  $lxcinfo_parent1: .info.parent.task.name == 'pvestatd'
+  $lxcinfo_parent2: .info.parent.task.name == 'pvedaemon worke'
+# condition: not ($lxcinfo_cli and $lxcinfo_exepath and $lxcinfo_uid and ( ($lxcinfo_ancestors1 and $lxcinfo_parent1) or ($lxcinfo_ancestors2 and $lxcinfo_parent2) ))
+condition: not ($lxcinfo_exepath and $lxcinfo_uid and ( ($lxcinfo_ancestors1 and $lxcinfo_parent1) or ($lxcinfo_ancestors2 and $lxcinfo_parent2) ))
+---
+name: log.execve_script
+type: filter
+match-on:
+  events:
+    kunai: [execve_script]
+matches:
+  $ebtables_ancestors: .data.ancestors == "/usr/lib/systemd/systemd|/usr/bin/pve-firewall"
+  $ebtables_exepath: .data.exe_path == "/usr/sbin/ebtables-legacy-save"
+  $ebtables_parent: .info.parent.task.name == 'pve-firewall'
+  $ebtables_name: .info.task.name == 'ebtables-save'
+  $ebtables_uid: .info.task.uid == '0'
+  $sysstat_ancestors: .data.ancestors ~= "/usr/lib/systemd/systemd|/usr/sbin/cron|/usr/sbin/cron|/usr/bin/dash"
+  $sysstat_exepath: .data.exe_path == "/usr/lib/sysstat/debian-sa1"
+  $sysstat_parent: .info.parent.task.name == 'sh'
+  $sysstat_name: .info.task.name == 'debian-sa1'
+  $postfix_ancestors: .data.ancestors == "/usr/lib/systemd/systemd|/usr/sbin/cron|/usr/sbin/cron|/usr/bin/dash|/usr/bin/dash"
+  $postfix_exepath: .data.exe_path == "/usr/bin/egrep"
+  $postfix_parent: .info.parent.task.name == 'bash'
+  $postfix_name: .info.task.name == 'egrep'
+  $postfix_uid: .info.task.uid == '113'
+  $lynis_ancestors: .data.ancestors == "/usr/lib/systemd/systemd|/usr/sbin/lynis"
+  $lynis_exepath: .data.exe_path == "/usr/bin/egrep"
+  $lynis_parent: .info.parent.task.name == 'lynis'
+  $lynis_name: .info.task.name == 'egrep'
+  $lynis_uid: .info.task.uid == '0'
+condition: not (($ebtables_ancestors and $ebtables_exepath and $ebtables_uid and $ebtables_parent and $ebtables_name) or ($sysstat_ancestors and $sysstat_exepath and $sysstat_uid and $sysstat_parent and $sysstat_name) or ($postfix_ancestors and $postfix_exepath and $postfix_uid and $postfix_parent and $postfix_name) or ($lynis_ancestors and $lynis_exepath and $lynis_uid and $lynis_parent and $lynis_name))
+---
+name: log.mmap_exec
+type: filter
+match-on:
+  events:
+    kunai: [mmap_exec]
+matches:
+  $proxmoxfw: .data.ancestors == "/usr/lib/systemd/systemd|/usr/libexec/proxmox/proxmox-firewall"
+  $proxmoxfw_cli: .data.command_line == "nft -j -f -"
+  $proxmoxfw_uid: .info.task.uid == '0'
+  $lxcinfo_ancestors: .data.ancestors == "/usr/lib/systemd/systemd|/usr/bin/perl"
+  $lxcinfo_cli: .data.command_line ~= "lxc-info -n "
+  $lxcinfo_exepath: .data.exe_path == "/usr/bin/lxc-info"
+  $lxcinfo_uid: .info.task.uid == '0'
+  $lxcinfo_parent: .info.parent.task.name == 'pvestatd'
+  $zfs_ancestors: .data.ancestors == "/usr/lib/systemd/systemd|/usr/bin/perl"
+  $zfs_cli: .data.command_line ~= "zfs get -o value -Hp available,used "
+  $zfs_exepath: .data.exe_path == "/usr/sbin/zfs"
+  $zfs_uid: .info.task.uid == '0'
+  $zfs_parent: .info.parent.task.name == 'pvestatd'
+  $nft_ancestors: .data.ancestors == "/usr/lib/systemd/systemd|/usr/libexec/proxmox/proxmox-firewall"
+  $nft_cli: .data.command_line ~= "nft -j -f -"
+  $nft_exepath: .data.exe_path == "/usr/sbin/nft"
+  $nft_uid: .info.task.uid == '0'
+condition: not (($proxmoxfw and $proxmoxfw_cli and $proxmoxfw_uid) or ($lxcinfo_ancestors and $lxcinfo_cli and $lxcinfo_exepath and $lxcinfo_uid and $lxcinfo_parent) or ($zfs_ancestors and $zfs_cli and $zfs_exepath and $zfs_uid and $zfs_parent) or ($nft_ancestors and $nft_cli and $nft_exepath and $nft_uid))
+---
+name: log.read_config
+type: filter
+match-on:
+  events:
+    kunai: [read_config]
+matches:
+  $proxmoxfw: .data.ancestors == "/usr/lib/systemd/systemd|/usr/libexec/proxmox/proxmox-firewall"
+  $proxmoxfw_cli: .data.command_line == "nft -j -f -"
+  $proxmoxfw_uid: .info.task.uid == '0'
+  $stepcarenewer: .data.ancestors == "/usr/lib/systemd/systemd|/usr/bin/lxc-start|/usr/lib/systemd/systemd"
+  $stepcarenewer_cli: .data.command_line ~= "/usr/bin/step certificate needs-renewal "
+  $stepcarenewer_uid: .info.task.uid == '100000'
+condition: not (($proxmoxfw and $proxmoxfw_cli and $proxmoxfw_uid) or ($stepcarenewer and $stepcarenewer_cli and $stepcarenewer_uid))
+---
+name: log.clone
+type: filter
+match-on:
+  events:
+    kunai: [clone]
+matches:
+  $pvestatd: .data.ancestors == "/usr/lib/systemd/systemd|/usr/bin/perl"
+  $pvestatd_cli: .data.command_line ~= "pvestatd"
+  $pvestatd_uid: .info.task.uid == '0'
+condition: not ($pvestatd and $pvestatd_cli and $pvestatd_uid)
+---
+# we define here a dependency rule
+# NB: if this rule is used in several others it will
+# be evaluated only once per event scanned.
+name: dep.run.tmpfs
+# rule type to make the rule a dependency
+type: dependency
+matches:
+  $a: .data.ancestors ~= '\|(/tmp/|/dev/shm/|/run/|/var/(run|lock)/)\|?'
+  $p: .data.exe.path ~= '^(/tmp/|/dev/shm/|/run/|/var/(run|lock)/)'
+# $a is the slowest so run last
+condition: $p or $a
+---
+# we define a detection rule
+name: run.tmpfs
+meta:
+  tags: ['os:linux']
+  attack: [T1027.011]
+  authors: [qjerome]
+  comments:
+    - if something is running in tmpfs it is suspicious and we should stack up
+matches:
+  # we use the dependency we just defined above
+  $t: rule(dep.run.tmpfs)
+condition: $t
+severity: 2
