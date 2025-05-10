@@ -2,6 +2,11 @@
 ## FIXME! this will trigger on all file change meaning all the time...
 ## only want after rotate aka unlink/link but no such option
 
+- name: Ensure acl package is present
+  ansible.builtin.package:
+    name: acl
+    state: present
+
 - name: Add systemd.path rotate service and path files
   ansible.builtin.template:
     src: "{{ item }}.j2"
