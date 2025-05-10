@@ -45,11 +45,8 @@
   ansible.builtin.package:
     name: yamllint
     state: present
-
-- name: Ensure yamllint package is present for base validation
-  ansible.builtin.package:
-    name: yamllint
-    state: present
+  register: pkg
+  until: pkg is success
 
 - name: Configure kunai templates
   ansible.builtin.template:
