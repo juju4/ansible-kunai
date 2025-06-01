@@ -5,11 +5,11 @@ Description=Monitor Kunai logs permissions post-rotate
 Documentation=https://www.freedesktop.org/software/systemd/man/latest/systemd.path.html
 StartLimitIntervalSec=300s
 StartLimitBurst=1
+TriggerLimitIntervalSec=300
 
 [Path]
 PathChanged=/var/log/kunai/events.log
 Unit=kunailog.service
-TriggerLimitIntervalSec=300
 
 [Install]
 WantedBy=multi-user.target
