@@ -184,6 +184,8 @@ jobs:
       - name: After script - kunai report
         run: |
           set -x
+          ls -la /var/tmp/
           sudo /usr/local/scripts/kunai_report.sh
+          ls -la /var/tmp/
         if: ${{ always() }}
         continue-on-error: true
