@@ -1,7 +1,7 @@
 ---
 
 kunai_repo: kunai-project/kunai
-kunai_release: v0.5.5
+kunai_release: v0.6.0
 kunai_force_update: false
 
 kunai_install_args: ''

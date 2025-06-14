@@ -55,7 +55,7 @@
     mode: '0600'
     owner: root
     group: root
-    validate: 'yamllint %s'
+    validate: 'kunai config --validate %s'
   loop: "{{ kunai_rules_templates + kunai_ioc_templates + kunai_yara_templates }}"
   notify:
     - Restart kunai
