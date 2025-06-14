@@ -7,7 +7,7 @@ StartLimitIntervalSec=0
 [Service]
 Type=oneshot
 User=root
-ExecStart={{ scriptsdir }}/kunai_report.sh
+ExecStart={{ scriptsdir }}/kunai_report.sh > /dev/null
 WorkingDirectory=/var/tmp
 
 [Install]

@@ -50,4 +50,4 @@ jq -r '.data.mapped.error' "${f}" | sort | uniq -c | sort -nr | head -10
 echo
 echo
 
-find {{ kunai_reporting_dest }} -name 'nginx-report-*' -mtime +{{ kunai_reporting_purge | default('10') }} -exec rm {} \; 2>/dev/null
+find {{ kunai_reporting_dest }} -name 'kunai-report-*' -mtime +{{ kunai_reporting_purge | default('10') }} -exec rm {} \; 2>/dev/null
