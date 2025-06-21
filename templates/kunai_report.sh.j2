@@ -45,6 +45,8 @@ echo "** Events data.command_line"
 jq -r '.data.command_line' "${f}" | sort | uniq -c | sort -nr | head -10
 echo "** Events data.ancestors"
 jq -r '.data.ancestors' "${f}" | sort | uniq -c | sort -nr | head -10
+echo "** Events data.parent_command_line"
+jq -r '.data.parent_command_line' "${f}" | sort | uniq -c | sort -nr | head -10
 echo "** Events data.mapped.error"
 jq -r '.data.mapped.error' "${f}" | sort | uniq -c | sort -nr | head -10
 echo
