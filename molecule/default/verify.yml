@@ -126,7 +126,7 @@
     - name: Run EDR-Telemetry generator
       ansible.builtin.command:  # noqa no-changed-when
         cmd: /usr/bin/python3 lnx_telem_gen.py
-      timeout: 180
+      timeout: 300
       args:
         chdir: /tmp/EDR-Telemetry/Tools/Telemetry-Generator/Linux/
       failed_when: false
