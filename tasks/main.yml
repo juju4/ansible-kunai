@@ -50,7 +50,7 @@
 - name: Import systemd
   ansible.builtin.import_tasks: systemd.yml
   when:
-    - kunai_systemd_restriction_enable | bool
+    - kunai_systemd_restriction_enable | bool
 
 - name: Import systemd-rotate
   ansible.builtin.import_tasks: systemd-rotate.yml
@@ -60,7 +60,7 @@
 - name: Import reporting
   ansible.builtin.import_tasks: reporting.yml
   when:
-    - kunai_reporting_enable | bool
+    - kunai_reporting_enable | bool
 
 - name: Import rsyslog
   ansible.builtin.import_tasks: rsyslog.yml
