@@ -18,7 +18,7 @@
   ansible.builtin.get_url:
     url: "{{ gh_dl_url }}"
     dest: "{{ install_archives }}/{{ gh_dl_url | basename }}"
-    mode: '{{ gh_mode | default("0600") }}'
+    mode: '{{ gh_mode | default("0600") }}'
 
 - name: Download checksums
   ansible.builtin.get_url:
