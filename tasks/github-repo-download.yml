@@ -9,6 +9,7 @@
   register: gh_info
   until: gh_info is success
   changed_when: false
+  environment: "{{ proxy_env | default(omit) }}"
 
 - name: Set fact
   ansible.builtin.set_fact:
@@ -19,12 +20,14 @@
     url: "{{ gh_dl_url }}"
     dest: "{{ install_archives }}/{{ gh_dl_url | basename }}"
     mode: '{{ gh_mode | default("0600") }}'
+  environment: "{{ proxy_env | default(omit) }}"
 
 - name: Download checksums
   ansible.builtin.get_url:
     url: "https://github.com/kunai-project/kunai/releases/download/{{ gh_release }}/sha512.txt"
     dest: "{{ install_archives }}/kunai-{{ gh_release }}-sha512.txt"
     mode: '0600'
+  environment: "{{ proxy_env | default(omit) }}"
 
 - name: Get archive checksum
   ansible.builtin.stat:
