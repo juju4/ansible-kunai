@@ -83,5 +83,6 @@ repos:
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
+        language: python
         additional_dependencies:
           - jmespath
