@@ -3,26 +3,26 @@
 - name: X86_64 arch
   ansible.builtin.set_fact:
     kunai_arch: amd64
-  when: ansible_architecture == 'x86_64'
+  when: ansible_facts['architecture'] == 'x86_64'
 - name: Aarch64 arch
   ansible.builtin.set_fact:
     kunai_arch: aarch64
-  when: ansible_architecture == 'aarch64'
+  when: ansible_facts['architecture'] == 'aarch64'
 - name: Debug
   ansible.builtin.debug:
     var: "{{ item }}"
   loop:
-    - ansible_system
-    - ansible_architecture
+    - ansible_facts['system']
+    - ansible_facts['architecture']
 
 - name: Set fact is_container
   ansible.builtin.set_fact:
     is_container: true
   when: >
-    (ansible_virtualization_type is defined and
-      (ansible_virtualization_type == "docker"
-       or ansible_virtualization_type == "containerd"
-       or ansible_virtualization_type == "container"
+    (ansible_facts['virtualization_type'] is defined and
+      (ansible_facts['virtualization_type'] == "docker"
+       or ansible_facts['virtualization_type'] == "containerd"
+       or ansible_facts['virtualization_type'] == "container"
       )
     )
 
