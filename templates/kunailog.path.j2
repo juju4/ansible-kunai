@@ -5,9 +5,9 @@ Description=Monitor Kunai logs permissions post-rotate
 Documentation=https://www.freedesktop.org/software/systemd/man/latest/systemd.path.html
 StartLimitIntervalSec=300s
 StartLimitBurst=1
-{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version | int >= 9) or
-    (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 24) or
-    (ansible_os_family == 'Debian' and ansible_distribution_major_version | int >= 12)
+{% if (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] | int >= 9) or
+    (ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version'] | int >= 24) or
+    (ansible_facts['os_family'] == 'Debian' and ansible_facts['distribution_major_version'] | int >= 12)
 %}
 # https://www.freedesktop.org/software/systemd/man/latest/systemd.path.html#TriggerLimitIntervalSec= systemd 250+
 TriggerLimitIntervalSec=300
