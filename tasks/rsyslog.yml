@@ -13,7 +13,7 @@
 - name: Rsyslog present
   when:
     - rsyslog_v is defined
-    - rsyslog_v | string
+    - rsyslog_v | length > 0
   block:
     - name: Filter out kunai logs from rsyslog to avoid overload
       ansible.builtin.template:
