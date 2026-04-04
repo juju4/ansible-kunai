@@ -9,7 +9,7 @@
   remote_user: root
   become: yes
   vars:
-    kunai_git_rules: true
+    kunai_git_rules_enable: true
     kunai_rules_local:
       - "/etc/kunai/rules/config/rules_v0.1/bin_exclusion_common.dependency.yaml"
       - "/etc/kunai/rules/config/rules_v0.1/bin_system_wiper_list.dependency.yaml"
