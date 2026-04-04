@@ -22,9 +22,9 @@ output:
   buffered: false
 {% endif %}
 scanner:
-{% if kunai_rules_templates %}
+{% if kunai_rules_templates or kunai_rules_local %}
   rules:
-    {{ kunai_rules_templates | to_nice_yaml(indent=4) }}
+    {{ kunai_rules_templates + kunai_rules_local | to_nice_yaml(indent=4) }}
 {% else %}
   rules: []
 {% endif %}
