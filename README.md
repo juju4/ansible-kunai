@@ -44,7 +44,6 @@ $ molecule test
 $ MOLECULE_DISTRO=ubuntu:24.04 molecule test --destroy=never
 ```
 
-
 ## Troubleshooting & Known issues
 
 * "Error: failed to set RLIMIT_MEMLOCK: Operation not permitted (os error 1)"
@@ -55,6 +54,15 @@ $ MOLECULE_DISTRO=ubuntu:24.04 molecule test --destroy=never
 * systemd unit fail with "ExecStart=/usr/bin/kunai run -c /etc/kunai/config.yaml (code=exited, status=101)"
   * Try disabling systemd hardening
   * Review logs, eventually set RUST_BACKTRACE=1 in environment (kunai_env_debug)
+
+## Resources
+
+* <https://github.com/digisquad-repo/kunai-rules>
+
+## Alternatives
+
+* Linux: auditd, osquery, sysmonforlinux, [owLSM - Sigma Rules Engine inside the Linux Kernel using eBPF. Focusing on prevention capabilities](https://github.com/Cybereason-Public/owLSM)
+* Windows: osquery, [Rustinel - Windows EDR agent in Rust. ETW telemetry → Sigma/YARA detection → ECS alerts. User-mode, open-source, high-performance.](https://github.com/Karib0u/rustinel), sysmon
 
 ## License
 
