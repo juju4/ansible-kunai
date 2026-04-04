@@ -86,7 +86,7 @@
 
     - name: Check custom rule
       ansible.builtin.stat:
-        path: /etc/kunai/rules/config/rules_v0.1/bin_exclusion_common.dependency.yaml
+        path: /etc/kunai/rules/rules_v0.1/bin_exclusion_common.dependency.yaml
       register: rule1
       become: yes
     - name: Validate custom rule is present
