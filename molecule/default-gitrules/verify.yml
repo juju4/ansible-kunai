@@ -84,6 +84,16 @@
         that:
           - "'Kunai is a multi-purpose security monitoring tool for Linux systems' in run.stdout"
 
+    - name: Check custom rule
+      ansible.builtin.stat:
+        path: /etc/kunai/rules/config/rules_v0.1/bin_exclusion_common.dependency.yaml
+      register: rule1
+      become: yes
+    - name: Validate custom rule is present
+      ansible.builtin.assert:
+        that:
+          - rule1.stat.exists and rule1.stat.size != 0
+
     - name: Ensure processes are running
       ansible.builtin.command:
         cmd: "pgrep -u {{ item.u }} {{ item.p }}"
