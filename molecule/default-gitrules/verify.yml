@@ -126,17 +126,3 @@
       with_items: "{{ ports }}"
       when:
         - not is_container|bool
-
-    - name: Get EDR-Telemetry generator
-      ansible.builtin.git:
-        repo: https://github.com/tsale/EDR-Telemetry/
-        dest: /tmp/EDR-Telemetry
-        version: "{{ edr_telemetry_version }}"
-
-    - name: Run EDR-Telemetry generator
-      ansible.builtin.command:  # noqa no-changed-when
-        cmd: /usr/bin/python3 lnx_telem_gen.py
-      timeout: 300
-      args:
-        chdir: /tmp/EDR-Telemetry/Tools/Telemetry-Generator/Linux/
-      failed_when: false
