@@ -1,0 +1,7 @@
+---
+
+- name: Download git rules
+  ansible.builtin.git:
+    repo: "{{ kunai_git_rules }}"
+    dest: /etc/kunai/rules
+    version: "{{ kunai_git_rules_version }}"

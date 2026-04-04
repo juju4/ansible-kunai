@@ -31,6 +31,10 @@ jobs:
             suite: default
             experimental: true
           - distribution: ubuntu
+            version: '24.04'
+            suite: default-gitrules
+            experimental: true
+          - distribution: ubuntu
             version: '24.04-arm'
             suite: default
             experimental: true
@@ -163,6 +167,7 @@ jobs:
           set -x
           cat /etc/systemd/system/kunai.service
           sudo cat /etc/kunai/config.yaml
+          sudo ls -R /etc/kunai
         if: ${{ always() }}
         continue-on-error: true
       - name: After script - journalctl

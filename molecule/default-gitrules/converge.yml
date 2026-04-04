@@ -1,0 +1,400 @@
+---
+
+- name: Converge
+  hosts: all
+  environment:
+    http_proxy: "{{ lookup('env', 'http_proxy') }}"
+    https_proxy: "{{ lookup('env', 'https_proxy') }}"
+    no_proxy: "{{ lookup('env', 'no_proxy') }}"
+  remote_user: root
+  become: yes
+  vars:
+    kunai_git_rules: true
+    kunai_rules_local:
+      - "/etc/kunai/rules/config/rules_v0.1/bin_exclusion_common.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_wiper_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_c2_framework_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_wireless_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_selinux_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_openssl_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_metasploit_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_firewall_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_card_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_initd_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_responder_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_net_discovery_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_tunnel_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_power_mgmt_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_kubelet_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_mysql_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_daily_cmd_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_brute_force_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_libvirt_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_user_others_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_browsers_headless_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_kernel_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_shell_multiplexer_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_net_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_users_groups_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_rdp_client_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_browsers_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_diag_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_postgresql_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_systemd_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_diag_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_kernel_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_mongo_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ssh_client_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_recon_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_shell_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_compression_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_pkg_mgmt_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_editors_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_sudoers_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_cron_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_reverse_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_redis_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_admin_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_filesystem_mount_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_http_client_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_rsync_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_dns_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_firewall_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_user_ssh_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_apparmor_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_dmcrypt_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_container_docker_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_impacket_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_string_search_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_forensics_hardware_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_apache_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_build_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_debug_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_mimikatz_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_ssh_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_minikube_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_web_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_script_interpreters_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ftp_client_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_forensics_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ssh_keys_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_nginx_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_user_shells_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_mount_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_squid_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_forensics_hardware.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_string_search.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_mount.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_nginx.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_string_search.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_editors.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_shell.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_forensics.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_postgresql.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_browsers_headless.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_openssl.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_wireless.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_script_interpreters.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_brute_force.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_firewall.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ssh_client.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ssh_keys.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ftp_client.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_card.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_systemd.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_impacket.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_shell.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_net_discovery.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_shell_multiplexer.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_mysql.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_wiper.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_rdp_client.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_compression.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_rdp_client.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_net.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_filesystem_mount.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ftp_client.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ssh_keys.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_admin.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_power_mgmt.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_diag.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_kernel.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_user_shells.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_user_others.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_power_mgmt.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_kernel.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_user_ssh.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_diag.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_daily_cmd.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_web.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_cron.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_wiper.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_browsers.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_net_discovery.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_dns.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_metasploit.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_filesystem_mount.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_debug.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_debug.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_tunnel.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_compression.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_container_docker.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_c2_framework.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_responder.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_minikube.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_pkg_mgmt.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_firewall.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_browsers_headless.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_apparmor.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_forensics.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_reverse.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_http_client.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_initd.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_impacket.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_diag.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_recon.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_libvirt.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ssh_client.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_wireless.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_ssh.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_recon.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_tunnel.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_sudoers.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_apache.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_script_interpreters.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_brute_force.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_selinux.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_build.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_pkg_mgmt.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_responder.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_forensics_hardware.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_kernel.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_mongo.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_admin.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_mimikatz.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_http_client.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_diag.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_mimikatz.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_reverse.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_daily_cmd.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_kubelet.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_rsync.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_net.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_metasploit.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_c2_framework.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_firewall.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_users_groups.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_shell_multiplexer.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_dmcrypt.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_editors.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_squid.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_browsers.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_build.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_network_redis.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_web.connect.detection.yaml"
+      # --- new event coverage ---
+      - "/etc/kunai/rules/config/rules_v0.1/bin_debug_ptrace_exclude_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_injection.ptrace.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_kernel_module_loader_exclude_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_kernel.init_module.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_bpf_legitimate_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_bpf.bpf.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_jit_runtime_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_shellcode.mprotect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_shellcode.mmap.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_masquerade.prctl.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_security_tools_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_kill_security.kill.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/net_dns_long_query.dns_query.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_hacking_net_discovery.dns_query.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/net_exfil_high_entropy.send_data.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/path_logs_list.file_unlink.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/fs_log_deletion.file_unlink.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/path_system_bin_list.file_rename.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/fs_binary_masquerade.file_rename.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/path_tmp_exec_list.write_close.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/fs_dropped_exec.write_close.detection.yaml"
+      # --- round 2: new event coverage ---
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_io_uring.io_uring_sqe.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/path_tmp_script_list.file_create.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/fs_script_drop.file_create.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/path_persistence_list.file_create.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/fs_persistence.file_create.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_container_mgmt_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_namespace.clone.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_antidebug.prctl.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_capability.prctl.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/path_sensitive_config_list.read_config.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_credential_access.read_config.detection.yaml"
+      # --- round 3: recon, persistence, SSH tunnel, exfil, C2 ---
+      # persistence write detection
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_ldpreload_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_ldpreload.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_apt_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_apt.write.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_profiled_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_profiled.write.detection.yaml"
+      # SSH tunneling
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ssh_tunnel.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ssh_http_port.connect.detection.yaml"
+      # exfiltration
+      - "/etc/kunai/rules/config/rules_v0.1/net_exfil_large_volume.send_data.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_cloud_transfer_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_cloud_transfer.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_cloud_transfer.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/net_c2_send_data.send_data.detection.yaml"
+      # DNS exfil and suspicious DNS
+      - "/etc/kunai/rules/config/rules_v0.1/net_dns_exfil.dns_query.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/net_dns_public_resolver.dns_query.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_shell.dns_query.detection.yaml"
+      # C2 port detection
+      - "/etc/kunai/rules/config/rules_v0.1/net_c2_port.connect.detection.yaml"
+      # --- round 4: account mgmt, web shell, chattr, security disable ---
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_account_mgmt_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_account_create.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/path_webserver_docroot_list.file_create.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/fs_webshell_drop.file_create.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_chattr.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_security_disable.execve.detection.yaml"
+      # --- round 5: container escape, attacker behaviors, Red Atomic ---
+      # dependencies
+      - "/etc/kunai/rules/config/rules_v0.1/bin_software_discovery_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_arp_poison_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_screencapture_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_cryptominer_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_kerberos_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/path_webserver_docroot_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/path_history_files_list.file_unlink.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_pam_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_motd_list.write.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_file_discovery_list.dependency.yaml"
+      # software discovery
+      - "/etc/kunai/rules/config/rules_v0.1/bin_software_discovery.execve.detection.yaml"
+      # container escape
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_nsenter_escape.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_unshare_privesc.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/fs_container_escape_cgroup.write.detection.yaml"
+      # MITM / network sniffing
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_arp_poison.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_arp_poison.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_promisc.execve.detection.yaml"
+      # web shell via write
+      - "/etc/kunai/rules/config/rules_v0.1/fs_webshell_drop.write.detection.yaml"
+      # firewall destruction
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_firewall_flush.execve.detection.yaml"
+      # sudo and SUID abuse
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_sudo_shell.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_chmod_suid.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_suid_discovery.execve.detection.yaml"
+      # reverse shell
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_reverse_shell.execve.detection.yaml"
+      # cryptomining
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_cryptominer.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_cryptominer.connect.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/net_cryptominer_pool.connect.detection.yaml"
+      # history tampering
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_history_tamper.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/fs_history_deletion.file_unlink.detection.yaml"
+      # timestomp
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_timestomp.execve.detection.yaml"
+      # file discovery
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_file_discovery.execve.detection.yaml"
+      # ingress tool transfer
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_ingress_transfer.execve.detection.yaml"
+      # screen capture
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_screencapture.execve.detection.yaml"
+      # decode / deobfuscation
+      - "/etc/kunai/rules/config/rules_v0.1/know_attacker_decode_exec.execve.detection.yaml"
+      # proc memory credential dumping
+      - "/etc/kunai/rules/config/rules_v0.1/fs_proc_mem_access.read_config.detection.yaml"
+      # PAM manipulation
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_pam.write.detection.yaml"
+      # MOTD persistence
+      - "/etc/kunai/rules/config/rules_v0.1/config_system_motd.write.detection.yaml"
+      # AT scheduled jobs
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_at_job.execve.detection.yaml"
+      # credential search
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_credential_search.execve.detection.yaml"
+      # hidden staging dirs
+      - "/etc/kunai/rules/config/rules_v0.1/fs_hidden_dir_suspicious.file_create.detection.yaml"
+      # git hooks persistence
+      - "/etc/kunai/rules/config/rules_v0.1/fs_git_hooks.write.detection.yaml"
+      # kerberos
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_kerberos.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_kerberos.connect.detection.yaml"
+      # --- round 6: desktop app threat detection ---
+      # dependencies
+      - "/etc/kunai/rules/config/rules_v0.1/bin_desktop_messaging_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_desktop_code_editor_list.dependency.yaml"
+      # messaging apps spawning shells or downloading payloads
+      - "/etc/kunai/rules/config/rules_v0.1/bin_desktop_messaging_shell.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_desktop_messaging_net_tool.execve.detection.yaml"
+      # browsers spawning shells or reading credentials
+      - "/etc/kunai/rules/config/rules_v0.1/bin_browsers_shell.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_browsers_sensitive_read.read_config.detection.yaml"
+      # code editors downloading to suspicious paths
+      - "/etc/kunai/rules/config/rules_v0.1/bin_desktop_code_editor_download.execve.detection.yaml"
+      # --- round 8: new event coverage, dependency hardening ---
+      # new dependency lists
+      - "/etc/kunai/rules/config/rules_v0.1/path_security_config_list.file_unlink.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_log_management_exclude_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_critical_daemon_list.dependency.yaml"
+      # file_unlink: security tool and SSH key deletion
+      - "/etc/kunai/rules/config/rules_v0.1/fs_security_tool_deletion.file_unlink.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/fs_ssh_key_deletion.file_unlink.detection.yaml"
+      # file_rename: log tampering
+      - "/etc/kunai/rules/config/rules_v0.1/fs_log_file_rename.file_rename.detection.yaml"
+      # kill: critical daemon stop
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_kill_daemon.kill.detection.yaml"
+      # send_data: hacking tools exfiltrating to public IPs
+      - "/etc/kunai/rules/config/rules_v0.1/net_hacking_send_data.send_data.detection.yaml"
+      # dns_query: hacking tools beaconing / fast-flux C2
+      - "/etc/kunai/rules/config/rules_v0.1/net_hacking_dns_query.dns_query.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/net_dns_fast_flux.dns_query.detection.yaml"
+      # read_config: hacking tools reading credential files
+      - "/etc/kunai/rules/config/rules_v0.1/config_hacking_read_sensitive.read_config.detection.yaml"
+      # init_module: known rootkit module names
+      - "/etc/kunai/rules/config/rules_v0.1/bin_kernel_rootkit_module.init_module.detection.yaml"
+      # prctl: Yama ptrace scope bypass
+      - "/etc/kunai/rules/config/rules_v0.1/bin_system_prctl_ptracer.prctl.detection.yaml"
+
+      # --- round 9: SMB/NFS lateral movement, USB HID attack devices ---
+      # SMB lateral movement
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_smb_client_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_smb_client.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_smb_client.connect.detection.yaml"
+      # NFS lateral movement
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_nfs_client_list.dependency.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_nfs_client.execve.detection.yaml"
+      - "/etc/kunai/rules/config/rules_v0.1/bin_network_nfs_client.connect.detection.yaml"
+      # USB HID attack device detection (Teensy/Rubber Ducky/O.MG)
+      # - "/etc/kunai/rules/config/rules_v0.1/path_usb_attack_device_list.file_create.dependency.yaml"
+      # - "/etc/kunai/rules/config/rules_v0.1/fs_usb_attack_device.file_create.detection.yaml"
+  pre_tasks:
+    - name: Ubuntu | Install python3
+      ansible.builtin.raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3-minimal)
+      register: python3
+      changed_when: "'installed' in python3.stdout"
+      when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] | int >= 16)
+    - name: RedHat | Install python3
+      ansible.builtin.raw: test -e /usr/bin/python3 || (yum install -y python3)
+      register: python3
+      changed_when: "'installed' in python3.stdout"
+      when: (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] | int >= 8)
+    - name: Gather Facts
+      ansible.builtin.setup:
+      when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] | int >= 16)
+    - name: Ubuntu Bionic+, Redhat 8+ | Enforce python3 for ansible
+      ansible.builtin.set_fact:
+        ansible_python_interpreter: /usr/bin/python3
+      when: >
+        (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] | int >= 16) or
+        (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] | int >= 8)
+    - name: Debian | Refresh apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_facts['os_family'] == "Debian"
+  roles:
+    - { role: juju4.redhat_epel, when: ansible_facts.os_family == "RedHat" }
+    - juju4.kunai
