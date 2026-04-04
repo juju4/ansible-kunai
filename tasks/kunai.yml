@@ -44,7 +44,7 @@
 - name: Import Git rules
   ansible.builtin.import_tasks: rules.yml
   when:
-    - kunai_git_rules | bool
+    - kunai_git_rules_enable | bool
 
 - name: Ensure yamllint package is present for base validation
   ansible.builtin.package:
