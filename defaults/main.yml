@@ -37,6 +37,7 @@ kunai_events_write: false
 kunai_events_write_close: false
 kunai_env_debug: false
 
+kunai_rules_local: []
 kunai_rules_templates: []
 #  - rules.kunai
 kunai_ioc_templates: []
@@ -55,6 +56,10 @@ kunai_logrotate_days: 10
 
 kunai_systemd_path_enable: true
 kunai_systemd_path_group: systemd-journal
+
+kunai_git_rules_enable: false
+kunai_git_rules: "https://github.com/digisquad-repo/kunai-rules"
+kunai_git_rules_version: 4af9bfffd8cba228c4f82fffc80a545eb8870fc2
 
 install_archives: /var/_install
 scriptsdir: /usr/local/scripts

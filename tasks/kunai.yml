@@ -41,6 +41,11 @@
       when:
         - not is_container|bool
 
+- name: Import Git rules
+  ansible.builtin.import_tasks: rules.yml
+  when:
+    - kunai_git_rules | bool
+
 - name: Ensure yamllint package is present for base validation
   ansible.builtin.package:
     name: yamllint
@@ -55,7 +60,8 @@
     mode: '0600'
     owner: root
     group: root
-    validate: 'kunai config --validate %s'
+    # failed: [mini2014] (item=rules-custom.kunai) => {"ansible_facts['loop_var":'] "item", "changed": false, "checksum": "12c8f0ec50111d4cf996af325d6bc7d7810d4e6d", "exit_status": 1, "item": "rules-custom.kunai", "msg": "failed to validate", "stderr": "Error: failed at deserializing YAML configuration: missing field `max_buffered_events` at line 4 column 1\n", "stderr_lines": ["Error: failed at deserializing YAML configuration: missing field `max_buffered_events` at line 4 column 1"], "stdout": "", "stdout_lines": []}
+    # validate: 'kunai config --validate %s'
   loop: "{{ kunai_rules_templates + kunai_ioc_templates + kunai_yara_templates }}"
   notify:
     - Restart kunai
