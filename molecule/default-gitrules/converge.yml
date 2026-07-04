@@ -71,7 +71,6 @@
       - "/etc/kunai/rules/rules_v0.1/bin_hacking_mimikatz_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_network_ssh_list.write.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_minikube_list.write.dependency.yaml"
-      - "/etc/kunai/rules/rules_v0.1/bin_hacking_web_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_script_interpreters_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_forensics_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_network_ssh_keys_list.dependency.yaml"
