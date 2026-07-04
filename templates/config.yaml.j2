@@ -23,8 +23,7 @@ output:
 {% endif %}
 scanner:
 {% if kunai_rules_templates or kunai_rules_local %}
-  rules:
-    {{ kunai_rules_templates + kunai_rules_local | to_nice_yaml(indent=4) }}
+  rules: {{ kunai_rules_templates | map('regex_replace', '^', '/etc/kunai/') | list | union(kunai_rules_local) }}
 {% else %}
   rules: []
 {% endif %}
