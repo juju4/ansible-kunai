@@ -30,7 +30,6 @@
       - "/etc/kunai/rules/rules_v0.1/bin_daily_cmd_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_hacking_brute_force_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_libvirt_list.write.dependency.yaml"
-      - "/etc/kunai/rules/rules_v0.1/config_user_others_list.write.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_kernel_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_system_shell_multiplexer_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_hacking_net_list.dependency.yaml"
