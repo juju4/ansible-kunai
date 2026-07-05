@@ -22,7 +22,6 @@
       - "/etc/kunai/rules/rules_v0.1/config_network_card_list.write.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_system_initd_list.write.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_hacking_responder_list.dependency.yaml"
-      - "/etc/kunai/rules/rules_v0.1/bin_hacking_net_discovery_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_network_tunnel_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_power_mgmt_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_kubelet_list.write.dependency.yaml"
