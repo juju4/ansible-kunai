@@ -41,7 +41,6 @@
       - "/etc/kunai/rules/rules_v0.1/config_kernel_list.write.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_network_mongo_list.write.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_network_ssh_client_list.dependency.yaml"
-      - "/etc/kunai/rules/rules_v0.1/bin_system_recon_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_system_shell_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_compression_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_pkg_mgmt_list.dependency.yaml"
