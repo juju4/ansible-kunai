@@ -64,7 +64,6 @@
       - "/etc/kunai/rules/rules_v0.1/bin_string_search_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_forensics_hardware_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_network_apache_list.write.dependency.yaml"
-      - "/etc/kunai/rules/rules_v0.1/bin_build_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_debug_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_hacking_mimikatz_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_network_ssh_list.write.dependency.yaml"
