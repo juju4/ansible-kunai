@@ -49,7 +49,6 @@
       - "/etc/kunai/rules/rules_v0.1/config_system_cron_list.write.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_hacking_reverse_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_network_redis_list.write.dependency.yaml"
-      - "/etc/kunai/rules/rules_v0.1/bin_network_admin_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_filesystem_mount_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/bin_network_http_client_list.dependency.yaml"
       - "/etc/kunai/rules/rules_v0.1/config_network_dns_list.write.dependency.yaml"
