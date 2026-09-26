@@ -1,7 +1,7 @@
-[![Actions Status - Master](https://github.com/juju4/ansible-kunai/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-kunai/actions?query=branch%3Amain)
-[![Actions Status - Devel](https://github.com/juju4/ansible-kunai/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-kunai/actions?query=branch%3Adevel)
-
 # Kunai ansible role
+
+[![Actions Status - Main](https://github.com/juju4/ansible-kunai/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-kunai/actions?query=branch%3Amain)
+[![Actions Status - Devel](https://github.com/juju4/ansible-kunai/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-kunai/actions?query=branch%3Adevel)
 
 Ansible role to setup [Kunai, Threat-hunting tool for Linux](https://github.com/kunai-project/kunai)
 
