@@ -3,8 +3,8 @@
 
 # /etc/kunai/config.yaml
 host_uuid: {{ random_uuid }}
-max_buffered_events: 1024
-max_eps_fs: 2048
+max_buffered_events: 8192
+max_eps_fs: 8192
 workers: null
 send_data_min_len: null
 harden: false
@@ -92,3 +92,5 @@ events:
     enable: {{ kunai_events_file_create | bool | lower }}
   file_scan:
     enable: {{ kunai_events_file_scan | bool | lower }}
+  io_uring_sqe:
+    enable: {{ kunai_events_io_uring_sqe | bool | lower }}
