@@ -32,6 +32,7 @@ kunai_events_file_rename: true
 kunai_events_file_unlink: true
 kunai_events_file_create: true
 kunai_events_file_scan: true
+kunai_events_io_uring_sqe: true
 kunai_events_read: false
 kunai_events_write: false
 kunai_events_write_close: false
