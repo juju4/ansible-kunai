@@ -33,7 +33,7 @@ jobs:
           - distribution: ubuntu
             version: '24.04'
             suite: default-gitrules
-            experimental: false
+            experimental: true
           - distribution: ubuntu
             version: '24.04-arm'
             suite: default
